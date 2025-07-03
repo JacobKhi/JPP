@@ -40,4 +40,4 @@ Siga os passos abaixo para colocar o projeto em funcionamento.
 Abra seu terminal e execute o comando abaixo. Este é o link público do seu projeto.
 
 ```sh
-git clone [https://github.com/JacobKhi/JPP.git](https://github.com/JacobKhi/JPP.git)
+git clone https://github.com/JacobKhi/JPP.git
