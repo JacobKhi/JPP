@@ -1,4 +1,4 @@
-# JPP - Interpretador de Linguagem Simples
+# JPP - Jacob Plus Plus
 
 Este é um projeto acadêmico de um interpretador para uma linguagem de programação simples, desenvolvida do zero em Java. O projeto cobre as fases fundamentais da compilação: análise léxica (tokenização), análise sintática (parsing) e interpretação/execução da árvore sintática gerada.
 
