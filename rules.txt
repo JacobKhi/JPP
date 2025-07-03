@@ -1,0 +1,5 @@
+variables declaration
+var x = 10 + 20; 
+
+simples functions
+print "hello world";
