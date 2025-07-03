@@ -49,6 +49,7 @@ public class App {
             Interpreter interpreter = new Interpreter();
             interpreter.interpret(ast);
             
+            
         } catch (Exception e) {
             System.err.println("Erro ao ler arquivo" + e.getMessage());
         }

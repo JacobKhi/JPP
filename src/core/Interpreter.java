@@ -7,9 +7,9 @@ import ast.AssignNode;
 import ast.BinaryOpNode;
 import ast.Node;
 import ast.NumberNode;
+import ast.PrintNode;
+import ast.StringNode;
 import ast.VariableNode;
-
-
 
 /**
  * O Interpretador.
@@ -49,7 +49,11 @@ public class Interpreter {
     private Object evaluate(Node expression){
         // --- Casos Base da Recursão ---
         if (expression instanceof NumberNode){
-            return (double) ((NumberNode) expression).value;
+            return (double) ((NumberNode) expression).getValue();
+        }
+
+        if (expression instanceof StringNode){
+            return ((StringNode) expression).getString();
         }
 
         if (expression instanceof VariableNode) {
@@ -62,22 +66,39 @@ public class Interpreter {
 
         // --- Caso Recursivo ---
         if (expression instanceof BinaryOpNode) {
-            BinaryOpNode binaryNode = (BinaryOpNode) expression;
+            BinaryOpNode node = (BinaryOpNode) expression;
             // Avalia recursivamente os lados esquerdo e direito da operação.
-            Object left = evaluate(binaryNode.getLeft());
-            Object right = evaluate(binaryNode.getRight());
+            Object left = evaluate(node.getLeft());
+            Object right = evaluate(node.getRight());
+
+            // Logica do operador '+'
+            if (node.getOperator().equals("+")){
+                // Caso os 2 sao strings faz a concatenacao
+                if (left instanceof String || right instanceof String){
+                    return String.valueOf(left) + String.valueOf(right);
+                }
+                // Caso sejam 2 doubles faz a soma
+                if (left instanceof Double && right instanceof Double){
+                    return (Double) left + (Double) right;
+                }
+            }
 
             // Garante que estamos fazendo operações com números
             if (left instanceof Double && right instanceof Double) {
-                switch (binaryNode.getOperator()) {
-                    case "+":
-                        return (Double) left + (Double) right;
+                switch (node.getOperator()) {
                     case "-":
                         return (Double) left - (Double) right;
-                    // Futuramente: case "*", case "/" ...
+                    case "*":
+                        return (Double) left * (Double) right;
+                    case "/":
+                        if ((double) right == 0) {
+                            throw new RuntimeException("Erro: Divisao por zero.");
+                        }
+                        return (double) left / (double) right;
                 }
             }
-            throw new RuntimeException("Operadores devem ser numeros.");
+
+            throw new RuntimeException("Operacao invalida '" + node.getOperator() + "' para os tipos de dados fornecidos.");
         }
 
         return null; // ou lançar um erro se o tipo de nó for desconhecido
@@ -99,6 +120,12 @@ public class Interpreter {
 
             // Apenas para depuração, vamos imprimir o valor
             System.out.println(assignNode.getVariable() + " = " + value);
+            return;
+        }
+
+        if(statement instanceof PrintNode){
+            Object value = evaluate(((PrintNode) statement).getExpression());
+            System.out.println(String.valueOf(value));
             return;
         }
 

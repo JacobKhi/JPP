@@ -15,8 +15,19 @@ public enum TokenType {
     
     // Operadores e Símbolos
     EQUAL,
+    EQUAL_EQUAL,   // ==
+    BANG_EQUAL,    // !=
+    GREATER,        // >
+    GREATER_EQUAL, // >=
+    LESS,          // <
+    LESS_EQUAL,    // <=
     PLUS,
     MINUS,
+    MULTIPLY,
+    DIVIDE,
     SEMICOLON,
+
+    TRUE,
+    FALSE,
 
 }
